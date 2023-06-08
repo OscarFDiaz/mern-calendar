@@ -5,13 +5,12 @@ import './CalendarPage.css';
 
 import { Navbar } from '../components/Navbar';
 import { getMessagesEs, localizer } from '../../helpers';
-import { CalendarEvent } from '../components/CalendarEvent';
+import { CalendarEvent, CalendarModal } from '../components/';
 import { useState } from 'react';
-import { CalendarModal } from '../components/CalendarModal';
 import { useUiStore, useCalendarStore } from '../../hooks';
 
 export const CalendarPage = () => {
-  const { events } = useCalendarStore();
+  const { events, setActiveEvent } = useCalendarStore();
   const { openDateModal } = useUiStore();
 
   const [lastview, setLastview] = useState(localStorage.getItem('lastview') || 'week');
@@ -32,7 +31,9 @@ export const CalendarPage = () => {
     openDateModal();
   };
 
-  const onSelect = (event) => {};
+  const onSelect = (event) => {
+    setActiveEvent(event);
+  };
   const onViewChanged = (event) => {
     localStorage.setItem('lastview', event);
     setLastview(event);
