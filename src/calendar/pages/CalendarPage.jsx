@@ -3,9 +3,8 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 import './CalendarPage.css';
 
-import { Navbar } from '../components/Navbar';
 import { getMessagesEs, localizer } from '../../helpers';
-import { CalendarEvent, CalendarModal } from '../components/';
+import { Navbar, CalendarEvent, CalendarModal, FabAddNew, FabDelete } from '../';
 import { useState } from 'react';
 import { useUiStore, useCalendarStore } from '../../hooks';
 
@@ -27,7 +26,7 @@ export const CalendarPage = () => {
     };
   };
 
-  const onDoubleClick = (event) => {
+  const onDoubleClick = () => {
     openDateModal();
   };
 
@@ -49,7 +48,7 @@ export const CalendarPage = () => {
         events={events}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 'calc(100vh - 80px)' }}
+        style={{ height: 'calc(100vh - 56px)' }}
         messages={getMessagesEs()}
         eventPropGetter={eventStyleGetter}
         components={{
@@ -60,6 +59,8 @@ export const CalendarPage = () => {
         onView={onViewChanged}
       />
       <CalendarModal />
+      <FabAddNew />
+      <FabDelete />
     </>
   );
 };

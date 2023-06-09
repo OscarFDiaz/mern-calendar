@@ -26,12 +26,13 @@ ReactModal.setAppElement('#root');
 
 export const CalendarModal = () => {
   const { isDateModalOpen, closeDateModal } = useUiStore();
-  const { activeEvent } = useCalendarStore();
+  const { activeEvent, startSavingEvent } = useCalendarStore();
+
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   const [formValues, setFormValues] = useState({
-    title: 'Oscar',
-    notes: 'Diaz',
+    title: '',
+    notes: '',
     start: new Date(),
     end: addHours(new Date(), 2),
   });
@@ -65,7 +66,8 @@ export const CalendarModal = () => {
     closeDateModal();
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
+    console.log('onsubmit');
     event.preventDefault();
     setFormSubmitted(true);
 
@@ -80,9 +82,10 @@ export const CalendarModal = () => {
       return;
     }
 
-    // TODO
     // Cerrar modal
-    // remover errores
+    await startSavingEvent(formValues);
+    closeDateModal();
+    setFormSubmitted(false);
   };
 
   return (
