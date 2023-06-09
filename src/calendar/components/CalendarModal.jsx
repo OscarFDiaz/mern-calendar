@@ -67,7 +67,6 @@ export const CalendarModal = () => {
   };
 
   const onSubmit = async (event) => {
-    console.log('onsubmit');
     event.preventDefault();
     setFormSubmitted(true);
 

@@ -19,7 +19,6 @@ export const useCalendarStore = () => {
       //Actualiza
       dispatch(onUpdateEvent({ ...calendarEvent }));
     } else {
-      console.log('Startsavingevent');
       //Añade
       dispatch(onAddNewEvent({ ...calendarEvent, _id: new Date().getTime() }));
     }
