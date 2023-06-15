@@ -1,6 +1,6 @@
 # 📅 Aplicación React para crear un calendario de eventos [FRONTEND]
 
-📰 Aplicación creada usando <b>Vite + React, Redux, date-fns, BigCalendar, DataPicker, RouterDOM, SweetAlert2</b>.
+📰 Aplicación creada usando <b>Vite + React, Redux, Axios, date-fns, BigCalendar, DataPicker, RouterDOM, SweetAlert2</b>.
 
 📝 Esta aplicación fue creada siguiendo el curso de Fernando Herrera: [React: De cero a experto (Hooks y MERN)](https://www.udemy.com/course/react-cero-experto/)
 
