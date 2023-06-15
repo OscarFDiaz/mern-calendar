@@ -1,4 +1,4 @@
-# 📅 Aplicación React para crear un calendario de eventos
+# 📅 Aplicación React para crear un calendario de eventos [FRONTEND]
 
 📰 Aplicación creada usando <b>Vite + React, Redux, date-fns, BigCalendar, DataPicker, RouterDOM, SweetAlert2</b>.
 
