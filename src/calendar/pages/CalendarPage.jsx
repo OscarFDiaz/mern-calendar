@@ -5,18 +5,20 @@ import './CalendarPage.css';
 
 import { getMessagesEs, localizer } from '../../helpers';
 import { Navbar, CalendarEvent, CalendarModal, FabAddNew, FabDelete } from '../';
-import { useState } from 'react';
-import { useUiStore, useCalendarStore } from '../../hooks';
+import { useEffect, useState } from 'react';
+import { useUiStore, useCalendarStore, useAuthStore } from '../../hooks';
 
 export const CalendarPage = () => {
-  const { events, setActiveEvent } = useCalendarStore();
+  const { user } = useAuthStore();
+  const { events, setActiveEvent, startLoadingEvents } = useCalendarStore();
   const { openDateModal } = useUiStore();
 
   const [lastview, setLastview] = useState(localStorage.getItem('lastview') || 'week');
 
   const eventStyleGetter = (event, start, end, isSelected) => {
+    const isMyEvent = user.uid === event.user._id || user.uid === event.user.uid;
     const style = {
-      backgroundColor: '#347cf7',
+      backgroundColor: isMyEvent ? '#347cf7' : '#465660',
       borderRadius: '0px',
       opacity: 0.8,
       color: 'white',
@@ -33,10 +35,16 @@ export const CalendarPage = () => {
   const onSelect = (event) => {
     setActiveEvent(event);
   };
+
   const onViewChanged = (event) => {
     localStorage.setItem('lastview', event);
     setLastview(event);
   };
+
+  useEffect(() => {
+    startLoadingEvents();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

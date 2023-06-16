@@ -1,8 +1,18 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { onAddNewEvent, onDelteEvent, onSetActiveEvent, onUpdateEvent } from '../store';
+import {
+  onAddNewEvent,
+  onDelteEvent,
+  onLoadEvents,
+  onSetActiveEvent,
+  onUpdateEvent,
+} from '../store';
+import calendarApi from '../api/calendarApi';
+import { convertEventToDateEvent } from '../helpers';
+import Swal from 'sweetalert2';
 
 export const useCalendarStore = () => {
   const { events, activeEvent } = useSelector((state) => state.calendar);
+  const { user } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -11,21 +21,39 @@ export const useCalendarStore = () => {
   };
 
   const startSavingEvent = async (calendarEvent) => {
-    // TODO: Llegar al backen
+    try {
+      if (calendarEvent.id) {
+        // Actualiza
+        await calendarApi.put(`/events/${calendarEvent.id}`, calendarEvent);
 
-    // TODO BIEN
-
-    if (calendarEvent._id) {
-      //Actualiza
-      dispatch(onUpdateEvent({ ...calendarEvent }));
-    } else {
-      //Añade
-      dispatch(onAddNewEvent({ ...calendarEvent, _id: new Date().getTime() }));
+        dispatch(onUpdateEvent({ ...calendarEvent, user }));
+        return;
+      }
+      // Añade
+      const { data } = await calendarApi.post('/events', calendarEvent);
+      dispatch(onAddNewEvent({ ...calendarEvent, id: data.evento.id, user }));
+    } catch (error) {
+      console.log(error);
+      Swal.fire(
+        'Error al guardar',
+        error.response.data?.msg || 'Error al intentar guardar',
+        'error',
+      );
     }
   };
 
   const startDeletingEvent = () => {
     dispatch(onDelteEvent());
+  };
+
+  const startLoadingEvents = async () => {
+    try {
+      const { data } = await calendarApi.get('/events');
+      const events = convertEventToDateEvent(data.eventos);
+      dispatch(onLoadEvents(events));
+    } catch (error) {
+      console.log('Error cargando eventos:' + error);
+    }
   };
 
   return {
@@ -35,7 +63,8 @@ export const useCalendarStore = () => {
     hasEventSelected: !!activeEvent,
     //* Methods
     setActiveEvent,
-    startSavingEvent,
     startDeletingEvent,
+    startLoadingEvents,
+    startSavingEvent,
   };
 };
