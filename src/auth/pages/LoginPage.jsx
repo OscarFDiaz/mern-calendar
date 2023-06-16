@@ -1,5 +1,8 @@
+import { useEffect } from 'react';
+import { useAuthStore } from '../../hooks/useAuthStore';
 import { useForm } from '../../hooks/useForm';
 import './LoginPage.css';
+import Swal from 'sweetalert2';
 
 const loginFormFields = {
   loginEmail: '',
@@ -14,6 +17,8 @@ const registerFormFields = {
 };
 
 export const LoginPage = () => {
+  const { startLogin, startRegister, errorMessage } = useAuthStore();
+
   const {
     loginEmail,
     loginPassword,
@@ -30,23 +35,46 @@ export const LoginPage = () => {
 
   const loginSubmit = (event) => {
     event.preventDefault();
-    console.log({ loginEmail, loginPassword });
+    startLogin({ email: loginEmail, password: loginPassword });
   };
 
   const registerSubmit = (event) => {
     event.preventDefault();
-    console.log({ registerName, registerPassword, registerPassword2, registerEmail });
+    if (registerPassword !== registerPassword2) {
+      Swal.fire('Error en el registro', 'Las contraseñas no son iguales', 'error');
+      return;
+    }
+
+    if (registerPassword.length < 6 || registerPassword2.length < 6) {
+      Swal.fire(
+        'Error en el registro',
+        'La contraseña debe ser tener al menos 6 caracteres',
+        'error',
+      );
+      return;
+    }
+    startRegister({
+      email: registerEmail,
+      password: registerPassword,
+      name: registerName,
+    });
   };
 
+  useEffect(() => {
+    if (errorMessage !== undefined) {
+      Swal.fire('Error al iniciar sesión', errorMessage, 'error');
+    }
+  }, [errorMessage]);
+
   return (
-    <div className="container login-container">
+    <div className="container position-absolute top-50 start-50 translate-middle">
       <div className="row">
         <div className="col-md-6 login-form-1">
-          <h3>Ingreso</h3>
+          <h3 className="mb-4">Ingreso</h3>
           <form onSubmit={loginSubmit}>
             <div className="form-group mb-2 form-floating">
               <input
-                type="text"
+                type="email"
                 className="form-control"
                 placeholder="Correo"
                 name="loginEmail"
@@ -77,7 +105,7 @@ export const LoginPage = () => {
         </div>
 
         <div className="col-md-6 login-form-2">
-          <h3>Registro</h3>
+          <h3 className="mb-4">Registro</h3>
           <form onSubmit={registerSubmit}>
             <div className="form-group mb-2 form-floating">
               <input
