@@ -4,13 +4,15 @@
 
 📝 Esta aplicación fue creada siguiendo el curso de Fernando Herrera: [React: De cero a experto (Hooks y MERN)](https://www.udemy.com/course/react-cero-experto/)
 
+🖥 El backend esta alojado en <a>https://railway.app/</a> creado con Express, Mongo y Node
+
 ---
 
 ## Demo
 
 🔗 Link para demo en Github pages
 
-PENDIENTE
+https://oscarfdiaz.github.io/mern-calendar/
 
 ---
 
