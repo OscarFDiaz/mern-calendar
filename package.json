@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://github.com/OscarFDiaz/mern-calendar",
+  "homepage": "https://oscarfdiaz.github.io/mern-calendar",
   "scripts": {
     "dev": "vite",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
