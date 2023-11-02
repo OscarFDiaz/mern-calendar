@@ -4,7 +4,7 @@
 
 📝 Esta aplicación fue creada siguiendo el curso de Fernando Herrera: [React: De cero a experto (Hooks y MERN)](https://www.udemy.com/course/react-cero-experto/)
 
-🖥 El [backend](https://github.com/OscarFDiaz/mern-calendar-backend) esta alojado en <a>https://vercel.com/</a> creado con Express, Mongo y Node
+🖥 El [backend](https://github.com/OscarFDiaz/mern-calendar-backend) esta alojado en <a>https://app.cyclic.sh/</a> creado con Express, Mongo y Node
 
 ---
 
